@@ -24,7 +24,6 @@ jobs:
           node-version: '22.x'
 
       - name: npm install, build, and test
-        working-directory: ./server       # <-- เพิ่มบรรทัดนี้เพื่อชี้เข้าไปที่โฟลเดอร์ server
         run: |
           npm install
           npm run build --if-present
@@ -34,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: server
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_195A5B5D1E86445D8ED8C1AA807E2708 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F6036798421346F9ACEA27D5F6739CA7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_57C99B9A3DE24ED6AFCF8D44ED5941D8 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0CCEAC63496D43889CA1D272DC65D39C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_725747FAB9EE417C851FB233DCC05340 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A373C5F15A0D4D9CA3B178BD809AB45E }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,5 +61,5 @@ jobs:
         with:
           app-name: 'app-clinicapp-api-66025650'
           slot-name: 'Production'
-          package: ./server
+          package: .
           
